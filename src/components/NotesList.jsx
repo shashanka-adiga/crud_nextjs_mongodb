@@ -3,6 +3,7 @@ import { HiPencilAlt } from "react-icons/hi";
 import DeleteBtn from "./DeleteBtn";
 
 async function getNotes() {
+
   const res = await fetch("http://localhost:3000/api/notes",
     { cache: 'no-store' }
   );
@@ -25,8 +26,8 @@ async function NotesList() {
             <p className="text-sm">{note.description}</p>
           </div>
           <div>
-            <DeleteBtn />
-            <Link href={"/editPage/123"}>
+            <DeleteBtn id = {note._id} />
+            <Link href={`/editPage/${note._id}`}>
               <HiPencilAlt />
             </Link>
           </div>

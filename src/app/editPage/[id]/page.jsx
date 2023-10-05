@@ -1,21 +1,27 @@
-"use client"
 
-export default function editPage() {
-  return (
-    <form className="flex flex-col container mx-auto mt-10 gap-2 ">
-      <input
-        className="border border-slate-900 p-2"
-        type="text"
-        placeholder="enter the title"
-      />
-      <input
-        className="border border-slate-900 p-2 "
-        type="text"
-        placeholder="enter the description"
-      />
-      <button className="border bg-green-600 p-2 w-fit font-bold text-white">
-        Submit
-      </button>
-    </form>
-  );
+import EditPage from '@/components/EditPage'
+
+const getDetailsById = async (id) => {
+    const res = await fetch(`http://localhost:3000/api/notes/${id}`,{
+      cache:"no-store"
+    })
+    if(!res.ok){
+      throw new Error("failed to fetch note")
+    }
+    return res.json()
 }
+
+async function PageToEdit({params}) {
+  const {id} = params
+
+  const {note} = await getDetailsById(id)
+  const {title,description} = note
+
+  return (
+    <>
+      <EditPage  id={id} title={title} description={description}/>
+    </>
+  )
+}
+
+export default PageToEdit

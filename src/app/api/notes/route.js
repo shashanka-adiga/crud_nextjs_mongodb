@@ -28,3 +28,19 @@ export async function GET(){
         return NextResponse.json({message:"get request was not succesful!"},{status:500})
     }
 }
+
+export async function DELETE(request){
+    const id = await request.nextUrl.searchParams.get("id")
+    console.table(id)
+    try {
+        
+        await connectToMongoDb()
+        await Note.findByIdAndDelete(id)
+        return NextResponse.json({message:"delete worked successfully!"},{status:200})
+    } catch (error) {
+        return NextResponse.json({message:"delete failed!"},{status:500})
+    }
+}
+
+
+

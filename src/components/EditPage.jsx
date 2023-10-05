@@ -1,22 +1,18 @@
-"use client"
+"use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import {useRouter} from 'next/navigation'
 
+export default function EditPage({id,title,description}) {
 
-function addPage() {
-
-  const [title,setTitle] = useState('')
-  const [description,setDescription] = useState('')
- 
+  const [newTitle, setNewTitle] = useState(title)
+  const [newDescription,setNewDescription] = useState(description)
   const router = useRouter()
+
   const submitHandler = async (e) => {
     e.preventDefault()
-    await fetch('http://localhost:3000/api/notes',{
-      method:"POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({title,description})
+    await fetch(`http://localhost:3000/api/notes/${id}`,{
+      method:"PUT",
+      body:JSON.stringify({newTitle,newDescription})
     })
     router.push('/')
     router.refresh()
@@ -27,22 +23,20 @@ function addPage() {
       <input
         className="border border-slate-900 p-2"
         type="text"
-        placeholder="enter the title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        placeholder="enter the new title"
+        value={newTitle}
+        onChange={(e) => setNewTitle(e.target.value)}
       />
       <input
         className="border border-slate-900 p-2 "
         type="text"
         placeholder="enter the description"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        value = {newDescription}
+        onChange={(e) => setNewDescription(e.target.value)}
       />
       <button type="submit" className="border bg-green-600 p-2 w-fit font-bold text-white">
-        Add Note
+        Update
       </button>
     </form>
   );
 }
-
-export default addPage;

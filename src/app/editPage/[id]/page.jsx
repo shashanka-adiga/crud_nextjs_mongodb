@@ -1,3 +1,5 @@
+"use client"
+
 export default function editPage() {
   return (
     <form className="flex flex-col container mx-auto mt-10 gap-2 ">

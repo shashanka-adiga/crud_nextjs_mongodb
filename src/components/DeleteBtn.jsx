@@ -1,3 +1,5 @@
+"use client"
+
 import { HiOutlineTrash } from "react-icons/hi";
 
 function DeleteBtn() {
